@@ -18,12 +18,15 @@ func Log(handler http.HandlerFunc) http.HandlerFunc{
     })
 }
 
+
+
 func main() {
 	
 	http.HandleFunc("/header", Log(reqHeader))
 	http.HandleFunc("/version", Log(getVersion))
 
 	http.HandleFunc("/",  Log(Default))
+	http.HandleFunc("/healthz", healthz)
 
 	if err := http.ListenAndServe(":8080", nil);err != nil {
 		log.Fatal("ListenAndServe: ", err)
@@ -38,7 +41,8 @@ func Default(w http.ResponseWriter, r *http.Request){
 func reqHeader(w http.ResponseWriter, req *http.Request){
 	for name, headers := range req.Header {
         for _, h := range headers {
-            io.WriteString(w, fmt.Sprintf( "%v: %v\n", name, h))		
+            //io.WriteString(w, fmt.Sprintf( "%v: %v\n", name, h))
+			w.Header().Add(name, h)		
         }
     }
 }
@@ -48,4 +52,8 @@ func getVersion(w http.ResponseWriter, req *http.Request){
 	w.Header().Add("VERSION", version)
 	io.WriteString(w, fmt.Sprintf("Version: %s\n", version))
 
+}
+
+func healthz(w http.ResponseWriter, r *http.Request) {
+	io.WriteString(w, "ok\n")
 }
