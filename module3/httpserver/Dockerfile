@@ -1,8 +1,14 @@
-FROM golang:1.16.5-alpine
-RUN mkdir /app
-ADD . /app/ 
+FROM golang:1.16.5 AS build 
 WORKDIR /app
-RUN go build -o httpserver .
+ADD . /app/ 
+ENV CGO_ENABLED=0 \
+    GO111MODULE=on \
+    GOPROXY=https://goproxy.cn,direct
+RUN GOOS=linux go build -installsuffix cgo -o httpserver hellohttp.go 
+
+FROM busybox
+COPY --from=build /app/httpserver /app/httpserver
 EXPOSE 8080
+WORKDIR /app/
 CMD  ["/app/httpserver"]
 
