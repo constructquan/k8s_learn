@@ -12,7 +12,17 @@ docker build -t hellochenpro7799/hellohttp:v1   .
 
 
 
-**容器启动**
+**推送镜像至dockerhub仓库发布**
+
+```shell
+docker push hellochenpro7799/hellohttp:v1
+```
+
+
+
+
+
+****
 
 **容器启动**
 
