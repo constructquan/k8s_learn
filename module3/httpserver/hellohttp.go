@@ -33,13 +33,13 @@ func healthz(w http.ResponseWriter, r *http.Request) {
 
 // get version
 func version(w http.ResponseWriter, req *http.Request){
-     	var setting Config
-   	config, err := ioutil.ReadFile("./httpserverconfig.yaml")
-   	if err != nil {
-     		fmt.Print(err)
-   	}
-   	yaml.Unmarshal(config, &setting)
-   	httpserver_version := string(setting.Version)
+	var setting Config
+	config, err := ioutil.ReadFile("./config/httpserverconfig.yaml")
+	if err != nil {
+		fmt.Print(err)
+	}
+	yaml.Unmarshal(config, &setting)
+	httpserver_version := string(setting.Version)
 	w.Header().Set("VERSION", httpserver_version)
         w.WriteHeader(200)
 }
