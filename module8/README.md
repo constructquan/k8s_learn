@@ -74,3 +74,15 @@ HTTP/1.1 200 OK
 Version: v1.0.7
 Date: Sun, 27 Feb 2022 10:55:19 GMT
 ```
+
+**探活功能**
+
+Deployment 增加 livenessProbe 探针。
+
+
+
+**增加Pod的QoS限制**
+
+Deployment使用resource.request和resource.limit对cpu和memory资源需求配额。
+
+
