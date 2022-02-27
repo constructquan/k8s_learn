@@ -15,7 +15,7 @@ docker build -t hellochenpro7799/httpserver:v1.0.1   .
 **推送镜像至dockerhub仓库发布**
 
 ```shell
-docker push hellochenpro7799/hellohttp:v1.0.1
+docker push hellochenpro7799/httpserver:v1.0.1
 ```
 
 
@@ -27,7 +27,7 @@ docker push hellochenpro7799/hellohttp:v1.0.1
 **容器启动**
 
 ```shell
-docker run -d -p 8080:8080 --name httpserver-1 hellochenpro7799/hellohttp:v1.0.1
+docker run -d -p 8080:8080 --name httpserver-1 hellochenpro7799/httpserver:v1.0.1
 ```
 
 
