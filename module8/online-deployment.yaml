@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: online-deployment
+  name: online-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: httpserver-1
+  template:
+    metadata:
+      labels:
+        app: httpserver-1
+    spec:
+      volumes:
+        - name: config-volume
+          configMap:
+            name: httpserver-cm
+      terminationGracePeriodSeconds: 30 
+      containers:
+        - image: hellochenpro7799/httpserver:latest
+          imagePullPolicy: Always
+          name: httpserver-1
+          volumeMounts:
+          - name: config-volume
+            mountPath: /app/config/
+          resources:
+            limits:
+              memory: 256Mi
+              cpu: 100m
+            requests:
+              memory: 128Mi
+              cpu: 100m
+          lifecycle:
+            preStop:
+              exec:
+                command: ["/bin/sh", "-c", "sh /app/online_gracefulstop.sh"]
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 30 
+            timeoutSeconds: 3
+            periodSeconds: 30
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 30
+            periodSeconds: 30 
+          
