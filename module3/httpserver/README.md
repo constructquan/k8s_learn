@@ -7,7 +7,7 @@
 
 
 ```shell
-docker build -t hellochenpro7799/httpserver:v1.0.2   .
+docker build -t hellochenpro7799/httpserver:latest   .
 ```
 
 
@@ -15,7 +15,7 @@ docker build -t hellochenpro7799/httpserver:v1.0.2   .
 **推送镜像至dockerhub仓库发布**
 
 ```shell
-docker push hellochenpro7799/httpserver:v1.0.2
+docker push hellochenpro7799/httpserver
 ```
 
 
@@ -27,7 +27,7 @@ docker push hellochenpro7799/httpserver:v1.0.2
 **容器启动**
 
 ```shell
-docker run -d -p 8080:8080 --name httpserver-1 hellochenpro7799/httpserver:v1.0.2
+docker run -d -p 8080:8080 --name httpserver-1 hellochenpro7799/httpserver:latest
 ```
 
 

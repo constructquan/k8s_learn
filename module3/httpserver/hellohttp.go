@@ -24,8 +24,8 @@ func healthz(w http.ResponseWriter, r *http.Request) {
 
 // get version
 func version(w http.ResponseWriter, req *http.Request){
-	os.Setenv("VERSION", "v1.0.2")
-    	v := os.Getenv("VERSION")
+//	os.Setenv("VERSION", "v1.0.2")
+        v := os.Getenv("VERSION")
 	w.Header().Set("VERSION", v)
   	w.WriteHeader(200)	
 }

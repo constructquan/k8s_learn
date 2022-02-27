@@ -8,6 +8,7 @@ RUN GOOS=linux go build -installsuffix cgo -o httpserver hellohttp.go
 
 FROM busybox
 COPY --from=build /app/httpserver /app/httpserver
+COPY --from=build /app/online_gracefulstop.sh /app/online_gracefulstop.sh
 EXPOSE 8080
 WORKDIR /app/
 CMD  ["/app/httpserver"]
