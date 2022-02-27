@@ -7,8 +7,17 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
-  	"syscall"
+	"syscall"
+	"io/ioutil"
+	yaml "gopkg.in/yaml.v2"
 )
+
+type Config struct {
+	Host	string `yaml:"host"`
+	Port	int64  `yaml:"port"`
+	Version string `yaml:"version"`
+}
+
 
 func Log(handler http.HandlerFunc) http.HandlerFunc{
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -24,10 +33,15 @@ func healthz(w http.ResponseWriter, r *http.Request) {
 
 // get version
 func version(w http.ResponseWriter, req *http.Request){
-//	os.Setenv("VERSION", "v1.0.2")
-        v := os.Getenv("VERSION")
-	w.Header().Set("VERSION", v)
-  	w.WriteHeader(200)	
+     	var setting Config
+   	config, err := ioutil.ReadFile("./httpserverconfig.yaml")
+   	if err != nil {
+     		fmt.Print(err)
+   	}
+   	yaml.Unmarshal(config, &setting)
+   	httpserver_version := string(setting.Version)
+	w.Header().Set("VERSION", httpserver_version)
+        w.WriteHeader(200)
 }
 
 // response request header 
@@ -35,7 +49,7 @@ func header(w http.ResponseWriter, req *http.Request){
 	for name, headers := range req.Header {
         for _, h := range headers {
             //io.WriteString(w, fmt.Sprintf( "%v: %v\n", name, h))
-		w.Header().Add(name, h)		
+		w.Header().Add(name, h)
         }
     }
 }
@@ -48,13 +62,13 @@ func Default(w http.ResponseWriter, req *http.Request){
 func main() {
 
    mux := http.NewServeMux()
-   
+
    // default request 
    mux.HandleFunc("/", Log(Default))
 
    // healthz test
-   mux.HandleFunc("/healthz",  healthz)    
- 
+   mux.HandleFunc("/healthz",  healthz)
+
    // get version
    mux.HandleFunc("/version", Log(version))
 
