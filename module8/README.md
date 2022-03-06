@@ -101,7 +101,7 @@ Deployment使用resource.request和resource.limit对cpu和memory资源需求配�
 
 ### 第二部分
 
-**安装 helm **
+**安装 helm**
 
 ```shell
 i. 下载最新版本：helm-v3.8.0-linux-amd64.tar.gz  
@@ -144,13 +144,6 @@ iii. 将可执行文件迁移到$PATH 目录： mv linux-amd64/helm  /usr/local/
   ingress-nginx-nginx-ingress-56bc9d5bcf-pxg5d   1/1     Running   0          13h   172.26.102.174   k8snode1   <none>           <none>
   ```
 
-- 创建新的 Service
-
-  ```shell
-  kubectl -n ingress create -f online-svc.yaml
-  
-  ```
-
 - 创建 Ingress (无 tls 签名证书)
 
   ```shell
@@ -187,10 +180,10 @@ iii. 将可执行文件迁移到$PATH 目录： mv linux-amd64/helm  /usr/local/
   绑定域名到 /etc/hosts，因为 nginx ingress controller 在 172.26.102.174 的节点，所以，绑定hosts:
 
   ```shell
-  echo "172.26.102.174  test.fengyiqi.com"
+  echo "172.26.102.174  test.fengyiqi.com" >> /etc/hosts
   ```
 
-  通过 ingress 访问pod的web服务：
+  通过 ingress 访问 pod 的 web 服务(返回版本 version 信息):
 
   ```shell
   root@k8smaster:~/personer/xunlian/module8# curl fengyiqi.com/version -I
@@ -249,7 +242,7 @@ iii. 将可执行文件迁移到$PATH 目录： mv linux-amd64/helm  /usr/local/
   
   ```
 
-  测试结果：
+  测试结果(返回version信息)：
 
   ```shell
   root@k8smaster:~/personer/xunlian/module8# curl -H "Host: fengyiqi.com" https://test.fengyiqi.com/version -v -k
