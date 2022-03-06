@@ -1,6 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: httpserver-cm
-data:
-  VERSION: v1.0.4
