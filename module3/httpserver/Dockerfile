@@ -4,6 +4,7 @@ ADD . /app/
 ENV CGO_ENABLED=0 \
     GO111MODULE=on \
     GOPROXY=https://goproxy.cn,direct
+RUN go get 
 RUN GOOS=linux go build -installsuffix cgo -o httpserver hellohttp.go 
 
 FROM busybox
