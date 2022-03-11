@@ -3,13 +3,22 @@ package main
 import (
 	"context"
 	"fmt"
+	"hello_http/metrics"
+	"io/ioutil"
+   "io"
+   "time"
 	"log"
 	"net/http"
 	"os"
 	"os/signal"
 	"syscall"
-	"io/ioutil"
+
 	yaml "gopkg.in/yaml.v2"
+
+	//"httpserver/metrics"
+   "math/rand"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
+	//"github.com/wonderivan/logger"
 )
 
 type Config struct {
@@ -75,6 +84,11 @@ func main() {
    // response request header 
    mux.HandleFunc("/header", Log(header))
 
+   // random delay 
+   metrics.Register()
+   mux.Handle("/metrics", promhttp.Handler())
+   mux.Handle("/delay", delay())
+
    server := &http.Server{
       Addr:         ":8080",
       Handler:      mux,
@@ -98,3 +112,21 @@ func listenSignal(ctx context.Context, httpSrv *http.Server) {
    }
 }
 
+func RandInt64(min, max int64) int64 {
+   if min >= max || min == 0 || max == 0{
+      return max
+   }
+   return rand.Int63n(max - min ) + min
+}
+
+func delay() http.Handler{
+   return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		timer := metrics.NewTimer()
+		defer timer.ObserverTotal()
+		delay := RandInt64(10, 2000)
+		time.Sleep(time.Millisecond * time.Duration(delay))
+		w.WriteHeader(http.StatusOK)
+		io.WriteString(w, "Delay function")
+
+	})
+}
