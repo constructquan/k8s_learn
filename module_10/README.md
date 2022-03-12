@@ -1,3 +1,12 @@
+> update: 2022.3.13
+
+
+**httpserver 代码**
+代码更新在module3: https://gitee.com/ahchpr/xunlian/tree/main/module3/httpserver
+
+镜像打包参考module3: https://gitee.com/ahchpr/xunlian/tree/main/module3/httpserver
+
+
 **安装loki stack**
 
 loki-prometheus，loki-grafana 这两个 svc 需要使用nodePort方式，让它在服务器能够被外网访问。
