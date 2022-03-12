@@ -108,3 +108,13 @@ kubectl -n httpserver create -f online-deployment.yaml
   ```
 
 - 在prometheus 查看数据
+
+  ![](https://gitee.com/ahchpr/xunlian/raw/main/module_10/picture/prometheus-httpserver.png)
+
+  
+
+- 在grafana中显示直方图
+
+  ![](https://gitee.com/ahchpr/xunlian/raw/main/module_10/picture/grafana-httpserver.png)
+  
+  
