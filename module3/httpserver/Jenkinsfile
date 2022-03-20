@@ -41,7 +41,7 @@ spec:
     stage('Build with Kaniko') {
       steps {
         container('kaniko') {
-          sh '/kaniko/executor -f `pwd`/Dockerfile -c `pwd`/src --cache=true \
+          sh '/kaniko/executor -f `pwd`/module3/httpserver/Dockerfile -c `pwd`/module3/httpserver --cache=true \
           --destination=hellochenpro7799/httpserver:${DATED_GIT_HASH} \
                   --insecure \
                   --skip-tls-verify  \
