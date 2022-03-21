@@ -25,7 +25,7 @@ spec:
   volumes:
   - name: docker-secret
     secret:
-      secretName: docker-cred
+      secretName: aliyun-cred
 """
     }
   }
@@ -42,7 +42,7 @@ spec:
       steps {
         container('kaniko') {
           sh '/kaniko/executor -f `pwd`/module3/httpserver/Dockerfile -c `pwd`/module3/httpserver --cache=true \
-          --destination=hellochenpro7799/httpserver:${DATED_GIT_HASH} \
+          --destination=registry.cn-shenzhen.aliyuncs.com/k8s-basika/httpserver:${DATED_GIT_HASH} \
                   --insecure \
                   --skip-tls-verify  \
                   -v=debug'
